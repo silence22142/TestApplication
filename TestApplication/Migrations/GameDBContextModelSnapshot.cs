@@ -16,7 +16,7 @@ namespace TestApplication.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
 
-            modelBuilder.Entity("TestApplication.Models.Game", b =>
+            modelBuilder.Entity("TestApplication.Models.GameDBModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using TestApplication.Models;
 
 namespace TestApplication.Data
 {
     public class GameDBContext : DbContext
     {
-        public DbSet<Game> Games { get; set; }
+        public DbSet<GameDBModel> Games { get; set; }
         private readonly IConfiguration _configuration;
 
         public GameDBContext(IConfiguration configuration)

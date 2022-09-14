@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TestApplication.Data;
 using TestApplication.Models;
 
 namespace TestApplication.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class GamesController : ControllerBase
     {
         private IGameData _gameData;
@@ -16,14 +16,13 @@ namespace TestApplication.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]")]
         public IActionResult GetGames()
         {
             return Ok(_gameData.GetGames());
         }
 
         [HttpGet]
-        [Route("api/[controller]/{id}")]
+        [Route("{id}")]
         public IActionResult GetGame(int id)
         {
             var game = _gameData.GetGame(id);
@@ -33,7 +32,7 @@ namespace TestApplication.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/games/{genre}")]
+        [Route("genres/{genre}")]
         public IActionResult GetGamesByGenre(string genre)
         {
             var games = _gameData.GetGamesByGenre(genre);
@@ -43,16 +42,17 @@ namespace TestApplication.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]")]
         public IActionResult AddGame(Game game)
         {
-            _gameData.AddGame(game);
-            return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host
-                           + HttpContext.Request.Path + "/" + game.Id, game);
+            var addedGame = _gameData.AddGame(game);
+            if (addedGame != null)
+                return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host
+                           + HttpContext.Request.Path + "/" + addedGame.Id, addedGame);
+            return Conflict("Already exist");
         }
 
         [HttpDelete]
-        [Route("api/[controller]/{id}")]
+        [Route("{id}")]
         public IActionResult DeleteGame(int id)
         {
             var game = _gameData.GetGame(id);
@@ -65,7 +65,7 @@ namespace TestApplication.Controllers
         }
 
         [HttpPatch]
-        [Route("api/[controller]/{id}")]
+        [Route("{id}")]
         public IActionResult EditGame(int id, Game game)
         {
             var existingGame = _gameData.GetGame(id);
@@ -74,7 +74,6 @@ namespace TestApplication.Controllers
                 game.Id = existingGame.Id;
                 _gameData.EditGame(game);
             }
-
             return Ok(game);
         }
     }

@@ -10,7 +10,7 @@ using TestApplication.Data;
 namespace TestApplication.Migrations
 {
     [DbContext(typeof(GameDBContext))]
-    [Migration("20220911152126_InitialCreate")]
+    [Migration("20220914132442_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace TestApplication.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
 
-            modelBuilder.Entity("TestApplication.Models.Game", b =>
+            modelBuilder.Entity("TestApplication.Models.GameDBModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
